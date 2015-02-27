@@ -115,6 +115,49 @@ Parsing it:
 
     let JSONData: NSData! // your JSON data hoes here
     let users: [User] = NKJSON.parse(JSONData, key: "data")
+    
+**Example 3:**
+
+JSONData:
+
+	{
+        "name": "Mickey",
+        "id": {
+            "series": "TC",
+            "number": 123456
+        },
+        "country": {
+        	"id": 123,
+        	"name": "Romania"
+        },
+        "languages": [
+        	{
+        		"id": 123,
+        		"name": "English"
+        	},
+        	{
+        		"id": 456,
+        		"name": "Romanian"
+        	}
+        ]
+    }
+    
+    class User {
+        var name: String!
+        var countryName: String!
+        var lastLanguageName: String!
+        
+        required init(JSON: NKJSON) {
+            name <> JSON["name"]
+            countryName <> JSON["country.name"] // Yup! You can even do that!
+            lastLanguageName <> JSON["languages.1.name"] // Even that! Or any other combination for that matter
+        }
+    }
+
+Parsing it:
+
+    let JSONData: NSData! // your JSON data hoes here
+    let user: User = NKJSON.parse(JSONData)
 
 ######What about those weird operators?
 Oh, I see! You are paying attention! Well, it's easy. Those operators do the *magic* trick. And there's a couple of them:
