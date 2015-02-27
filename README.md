@@ -175,5 +175,6 @@ So with **NKJSON** you can easily parse JSON and map it to your objects. All you
 
 1. Have your model objects implement the `JSONParsable` protocol
 2. Map your model's properties to JSON values using on of the above operator
->Remember! You can use `.` notation for accesing child properties of JSON values as seen in **Example 3**
 3. Fetch the JSON data to **NKJSON** and enjoy!
+
+> Remember! You can use `.` notation for accesing child properties of JSON values as seen in **Example 3**
