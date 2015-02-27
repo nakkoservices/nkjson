@@ -58,8 +58,8 @@ Well, with **NKJSON** all you have to do is have your classes implement the `JSO
 
 After that's done just feed the JSON data to **NKJSON** and grab your `User` object in no time!
 
-let JSONData: NSData! // your JSON data goes here
-let user: User = NKJSON.parse(JSONData)
+	let JSONData: NSData! // your JSON data goes here
+	let user: User = NKJSON.parse(JSONData)
 
 Easy, right? Told you!
 
