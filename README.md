@@ -168,3 +168,12 @@ Oh, I see! You are paying attention! Well, it's easy. Those operators do the *ma
 - `<|*|*|>` allows you to extract a dictionary of with `String`s as keys and `JSONParsable` objects as values from the JSON data to your specified property
 
 Now using these operators should allow you to map any complicated data structure of your model.
+
+##Recap
+
+So with **NKJSON** you can easily parse JSON and map it to your objects. All your have to do is follow these steps:
+
+1. Have your model objects implement the `JSONParsable` protocol
+2. Map your model's properties to JSON values using on of the above operator
+>Remember! You can use `.` notation for accesing child properties of JSON values as seen in **Example 3**
+3. Fetch the JSON data to **NKJSON** and enjoy!
