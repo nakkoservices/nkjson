@@ -13,6 +13,9 @@
 		C0EC4E111AA04BDC00511755 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C0EC4E101AA04BDC00511755 /* Images.xcassets */; };
 		C0EC4E141AA04BDC00511755 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = C0EC4E121AA04BDC00511755 /* LaunchScreen.xib */; };
 		C0EC4E201AA04BDC00511755 /* NKJSONTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0EC4E1F1AA04BDC00511755 /* NKJSONTests.swift */; };
+		C0EC4E2A1AA04BEE00511755 /* NKJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0EC4E291AA04BEE00511755 /* NKJSON.swift */; };
+		C0EC4E2D1AA04C2E00511755 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0EC4E2C1AA04C2E00511755 /* User.swift */; };
+		C0EC4E2F1AA04C3700511755 /* UserID.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0EC4E2E1AA04C3700511755 /* UserID.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,6 +39,9 @@
 		C0EC4E191AA04BDC00511755 /* NKJSONTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NKJSONTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C0EC4E1E1AA04BDC00511755 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C0EC4E1F1AA04BDC00511755 /* NKJSONTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NKJSONTests.swift; sourceTree = "<group>"; };
+		C0EC4E291AA04BEE00511755 /* NKJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NKJSON.swift; sourceTree = "<group>"; };
+		C0EC4E2C1AA04C2E00511755 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		C0EC4E2E1AA04C3700511755 /* UserID.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserID.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,6 +83,8 @@
 		C0EC4E061AA04BDB00511755 /* NKJSON */ = {
 			isa = PBXGroup;
 			children = (
+				C0EC4E2B1AA04C1F00511755 /* Model */,
+				C0EC4E291AA04BEE00511755 /* NKJSON.swift */,
 				C0EC4E091AA04BDC00511755 /* AppDelegate.swift */,
 				C0EC4E0B1AA04BDC00511755 /* ViewController.swift */,
 				C0EC4E0D1AA04BDC00511755 /* Main.storyboard */,
@@ -110,6 +118,15 @@
 				C0EC4E1E1AA04BDC00511755 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		C0EC4E2B1AA04C1F00511755 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				C0EC4E2C1AA04C2E00511755 /* User.swift */,
+				C0EC4E2E1AA04C3700511755 /* UserID.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -212,8 +229,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C0EC4E2D1AA04C2E00511755 /* User.swift in Sources */,
 				C0EC4E0C1AA04BDC00511755 /* ViewController.swift in Sources */,
 				C0EC4E0A1AA04BDC00511755 /* AppDelegate.swift in Sources */,
+				C0EC4E2A1AA04BEE00511755 /* NKJSON.swift in Sources */,
+				C0EC4E2F1AA04C3700511755 /* UserID.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
