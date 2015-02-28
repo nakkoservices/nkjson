@@ -1,4 +1,3 @@
----
 **Update**: Added `<<>>` operator which allows you to format your data before assigning it. Take a look at **Example 4** to see it in action
 
 ---
