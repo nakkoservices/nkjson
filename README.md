@@ -169,7 +169,7 @@ JSONData:
 
 	{
         "name": "Mickey",
-        "birthDay": "19.09.2988"
+        "birthDay": "19.09.1988"
     }
         
     class User {
@@ -197,6 +197,52 @@ Parsing it:
     let JSONData: NSData! // your JSON data hoes here
     let user: User = NKJSON.parse(JSONData)
 
+**Example 5:**
+
+JSONData:
+
+	{
+		"data": {
+			"users": [
+				{
+					"name": "Mickey",
+			        "birthDay": "19.09.1988"
+				},
+				{
+					"name": "Andu",
+			        "birthDay": "25.05.1986"
+				}
+			]
+		}
+    }
+        
+    class User {
+        var name: String!
+        var birthDay: NSDate!
+        
+        func dateFormatter(object: AnyObject?) -> NSDate? {
+        	if let dateString = object as? String {
+            	let dateFormatter = NSDateFormatter()
+	            dateFormatter.locale = NSLocale.systemLocale()
+    	        dateFormatter.dateFormat = "dd.MM.yyyy"
+        	    return dateFormatter.dateFromString(dateString)
+	        }
+	        return nil
+    	}
+        
+        required init(JSON: NKJSON) {
+            name <> JSON["name"]
+            birthDay <> JSON["birthDay"] <<>> dateFormatter
+        }
+    }
+
+Parsing it:
+
+    let JSONData: NSData! // your JSON data hoes here
+    let mickey: User = NKJSON.parse(JSONData, key:"data.users.0")
+    let andu: User = NKJSON.parse(JSONData, key:"data.users.1")
+    let allUsers: [User] = NKJSON.parse(JSONData, key:"data.users")
+
 ######What about those weird operators?
 Oh, I see! You are paying attention! Well, it's easy. Those operators do the *magic* trick. And there's a couple of them:
 
@@ -214,4 +260,4 @@ So with **NKJSON** you can easily parse JSON and map it to your objects. All you
 2. Map your model's properties to JSON values using on of the above operator
 3. Feed the JSON data to **NKJSON** and enjoy!
 
-> Remember! You can use `.` notation for accesing child properties of JSON values as seen in **Example 3**
+> Remember! You can use `.` notation for accesing child properties of JSON values as seen in **Example 3** and **Example 5**

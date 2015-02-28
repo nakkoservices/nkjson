@@ -27,6 +27,10 @@ class ViewController: UIViewController {
                 println("\(parentType): \(parent.name)")
             }
         }
+        
+        if let brother: User = NKJSON.parse(JSONString, key: "data.siblings.0") {
+            println("Brother's name is \(brother.name)")
+        }
     }
 
     override func didReceiveMemoryWarning() {

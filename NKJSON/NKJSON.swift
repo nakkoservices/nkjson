@@ -210,7 +210,8 @@ class NKJSON {
     class func parse<T:JSONParsable>(JSONData: NSData?, key: String) -> T? {
         if let data = JSONData {
             if let result: [String: AnyObject] = NSJSONSerialization.JSONObjectWithData(data, options: nil, error: nil) as? [String: AnyObject] {
-                if let objectInfo = result[key] as? [String: AnyObject] {
+                let JSON: NKJSON = NKJSON(dictionary: result)
+                if let objectInfo = JSON[key] as? [String: AnyObject] {
                     return (T.self as T.Type)(JSON: NKJSON(dictionary: objectInfo))
                 }
             }
@@ -236,11 +237,14 @@ class NKJSON {
     class func parse<T:JSONParsable>(JSONData: NSData?, key: String) -> [T]? {
         if let data = JSONData {
             if let result: [String: AnyObject] = NSJSONSerialization.JSONObjectWithData(data, options: nil, error: nil) as? [String: AnyObject] {
-                var allObjects: [T] = []
-                for objectInfo in result[key] as [[String: AnyObject]] {
-                    allObjects.append((T.self as T.Type)(JSON: NKJSON(dictionary: objectInfo)))
+                let JSON: NKJSON = NKJSON(dictionary: result)
+                if let objectInfos = JSON[key] as? [[String: AnyObject]] {
+                    var allObjects: [T] = []
+                    for objectInfo in objectInfos {
+                        allObjects.append((T.self as T.Type)(JSON: NKJSON(dictionary: objectInfo)))
+                    }
+                    return allObjects
                 }
-                return allObjects
             }
         }
         
