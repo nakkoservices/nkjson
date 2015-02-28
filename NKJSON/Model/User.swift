@@ -15,6 +15,17 @@ class User: JSONParsable {
     var siblings: [User]!
     var languages: [AnyObject]!
     var parents: [String: User]!
+    var birthDate: NSDate!
+    
+    func dateFormatter(object: AnyObject?) -> NSDate? {
+        if let dateString = object as? String {
+            let dateFormatter = NSDateFormatter()
+            dateFormatter.locale = NSLocale.systemLocale()
+            dateFormatter.dateFormat = "dd.MM.yyyy"
+            return dateFormatter.dateFromString(dateString)
+        }
+        return nil
+    }
     
     required init(JSON: NKJSON) {
         name <> JSON["name"]
@@ -22,6 +33,7 @@ class User: JSONParsable {
         siblings <|*|> JSON["siblings"]
         languages <> JSON["languages"]
         parents <|*|*|> JSON["parents"]
+        birthDate <> JSON["birthDate"] <<>> dateFormatter
     }
     
 }

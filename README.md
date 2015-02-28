@@ -1,3 +1,8 @@
+---
+**Update**: Added `<<>>` operator which allows you to format your data before assigning it. Take a look at **Example 4** to see it in action
+
+---
+
 #NKJSON
 ######The Swift class you were missing for those pesky JSON chunks of data
 
@@ -159,6 +164,40 @@ Parsing it:
     let JSONData: NSData! // your JSON data hoes here
     let user: User = NKJSON.parse(JSONData)
 
+**Example 4:**
+
+JSONData:
+
+	{
+        "name": "Mickey",
+        "birthDay": "19.09.2988"
+    }
+        
+    class User {
+        var name: String!
+        var birthDay: NSDate!
+        
+        func dateFormatter(object: AnyObject?) -> NSDate? {
+        	if let dateString = object as? String {
+            	let dateFormatter = NSDateFormatter()
+	            dateFormatter.locale = NSLocale.systemLocale()
+    	        dateFormatter.dateFormat = "dd.MM.yyyy"
+        	    return dateFormatter.dateFromString(dateString)
+	        }
+	        return nil
+    	}
+        
+        required init(JSON: NKJSON) {
+            name <> JSON["name"]
+            birthDay <> JSON["birthDay"] <<>> dateFormatter
+        }
+    }
+
+Parsing it:
+
+    let JSONData: NSData! // your JSON data hoes here
+    let user: User = NKJSON.parse(JSONData)
+
 ######What about those weird operators?
 Oh, I see! You are paying attention! Well, it's easy. Those operators do the *magic* trick. And there's a couple of them:
 
@@ -166,8 +205,7 @@ Oh, I see! You are paying attention! Well, it's easy. Those operators do the *ma
 - `<*>` allows you to extract any `JSONParsable` object from the JSON data to your specified property
 - `<|*|>` allows you to extract an array of `JSONParsable` objects from the JSON data to your specified property
 - `<|*|*|>` allows you to extract a dictionary of with `String`s as keys and `JSONParsable` objects as values from the JSON data to your specified property
-
-Now using these operators should allow you to map any complicated data structure of your model.
+- `<<>>` allows you to pass the JSON data through a data formatter before assigning it to your model's property. Very usefull for `NSDate` properties for example (see **Example 4**) or whenever you want to manipulate the data a bit more before assiging it
 
 ##Recap
 
@@ -175,6 +213,6 @@ So with **NKJSON** you can easily parse JSON and map it to your objects. All you
 
 1. Have your model objects implement the `JSONParsable` protocol
 2. Map your model's properties to JSON values using on of the above operator
-3. Fetch the JSON data to **NKJSON** and enjoy!
+3. Feed the JSON data to **NKJSON** and enjoy!
 
 > Remember! You can use `.` notation for accesing child properties of JSON values as seen in **Example 3**

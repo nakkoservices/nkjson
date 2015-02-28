@@ -20,6 +20,12 @@ infix operator <|*|> {}
 // Extract a Dictionary of JSONParsable objects
 infix operator <|*|*|> {}
 
+// Transform a type to another type using a callback
+infix operator <<>> { associativity left precedence 160 }
+
+func <<>><T>(left: AnyObject?, callback: (object: AnyObject?) -> T?) -> T? {
+    return callback(object: left)
+}
 func <><T> (inout left: T, right: AnyObject?) -> T {
     if let value = right as? T {
         left = value
