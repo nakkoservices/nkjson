@@ -1,4 +1,4 @@
-**Update**: Added `<<>>` operator which allows you to format your data before assigning it. Take a look at **Example 4** to see it in action
+**Update**: Added `NKJSON.rootKey` class variable used for accesing the whole underlaying JSON dictionary. See **Example 6** for details
 
 ---
 
@@ -242,7 +242,32 @@ Parsing it:
     let mickey: User = NKJSON.parse(JSONData, key:"data.users.0")
     let andu: User = NKJSON.parse(JSONData, key:"data.users.1")
     let allUsers: [User] = NKJSON.parse(JSONData, key:"data.users")
+    
+**Example 6:**
 
+Usually you initialize JSONParsable object using NKJSON.parse method. But maybe sometimes maybe all you want is a dictionary, or an array, or whatever else but NOT an `JSONParsable` object. Well take a look bellow to see how to do just that.
+
+JSONData:
+
+	{
+		"data": {
+			"users": [
+				{
+					"name": "Mickey",
+			        "birthDay": "19.09.1988"
+				}
+			]
+		}
+    }
+
+Parsing it:
+
+	var dictioanry: [String: AnyObject]!
+	if let JSON = NKJSON.parse(userString) {
+	    var dictionary: [String: AnyObject]!
+    	dictionary <> JSON[NKJSON.rootKey]
+	}
+	
 ######What about those weird operators?
 Oh, I see! You are paying attention! Well, it's easy. Those operators do the *magic* trick. And there's a couple of them:
 
@@ -260,4 +285,4 @@ So with **NKJSON** you can easily parse JSON and map it to your objects. All you
 2. Map your model's properties to JSON values using on of the above operator
 3. Feed the JSON data to **NKJSON** and enjoy!
 
-> Remember! You can use `.` notation for accesing child properties of JSON values as seen in **Example 3** and **Example 5**
+> Remember! You can use dot(`.`) notation for accesing child properties of JSON values as seen in **Example 3** and **Example 5**

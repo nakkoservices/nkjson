@@ -168,6 +168,10 @@ class NKJSON {
     
     private var resultDictionary: [String: AnyObject]! = nil
     
+    class var rootKey: String {
+        return "__root"
+    }
+    
     class func parse(JSONString: String) -> NKJSON? {
         return parse(JSONString.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: true))
     }
@@ -302,6 +306,10 @@ class NKJSON {
     }
     
     subscript(key: String) -> AnyObject? {
+        if key == NKJSON.rootKey {
+            return resultDictionary
+        }
+        
         return getValue(key.componentsSeparatedByString("."), dictionary: resultDictionary)
     }
     
