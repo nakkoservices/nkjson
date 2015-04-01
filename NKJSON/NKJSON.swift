@@ -306,7 +306,7 @@ public class NKJSON {
         return nil
     }
     
-    subscript(key: String) -> AnyObject? {
+    public subscript(key: String) -> AnyObject? {
         if key == NKJSON.rootKey {
             return resultDictionary
         }
