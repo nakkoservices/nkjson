@@ -164,7 +164,7 @@ func <|*|*|><T:JSONParsable>(inout left: [String: T]!, right: AnyObject?) -> [St
     return left
 }
 
-class NKJSON {
+public class NKJSON {
     
     private var resultDictionary: [String: AnyObject]! = nil
     
@@ -315,7 +315,7 @@ class NKJSON {
     
 }
 
-protocol JSONParsable {
+public protocol JSONParsable {
     
     init(JSON: NKJSON)
     
