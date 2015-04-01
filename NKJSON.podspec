@@ -8,7 +8,7 @@ Pod::Spec.new do |s|
     s.authors = { 'Mihai Fratu' => 'zeusent@msn.com' }
     s.source = { :git => 'https://github.com/nakkoservices/nkjson.git', :tag => s.version }
 
-    s.ios.deployment_target = '7.0'
+    s.ios.deployment_target = '8.0'
 
     s.source_files = 'NKJSON/NKJSON.swift'
 
