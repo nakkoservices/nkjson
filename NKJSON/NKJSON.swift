@@ -23,52 +23,53 @@ infix operator <|*|*|> {}
 // Transform a type to another type using a callback
 infix operator <<>> { associativity left precedence 160 }
 
-func <<>><T>(left: AnyObject?, callback: (object: AnyObject?) -> T?) -> T? {
+public func <<>><T>(left: AnyObject?, callback: (object: AnyObject?) -> T?) -> T? {
     return callback(object: left)
 }
-func <><T> (inout left: T, right: AnyObject?) -> T {
+
+public func <><T> (inout left: T, right: AnyObject?) -> T {
     if let value = right as? T {
         left = value
     }
     return left
 }
 
-func <><T> (inout left: T?, right: AnyObject?) -> T? {
+public func <><T> (inout left: T?, right: AnyObject?) -> T? {
     if let value = right as? T {
         left = value
     }
     return left
 }
 
-func <><T> (inout left: T!, right: AnyObject?) -> T! {
+public func <><T> (inout left: T!, right: AnyObject?) -> T! {
     if let value = right as? T {
         left = value
     }
     return left
 }
 
-func <*><T:JSONParsable> (inout left: T, right: AnyObject?) -> T {
+public func <*><T:JSONParsable> (inout left: T, right: AnyObject?) -> T {
     if let dictionary = right as? [String: AnyObject] {
         left = (T.self as T.Type)(JSON: NKJSON(dictionary: dictionary))
     }
     return left
 }
 
-func <*><T:JSONParsable> (inout left: T?, right: AnyObject?) -> T? {
+public func <*><T:JSONParsable> (inout left: T?, right: AnyObject?) -> T? {
     if let dictionary = right as? [String: AnyObject] {
         left = (T.self as T.Type)(JSON: NKJSON(dictionary: dictionary))
     }
     return left
 }
 
-func <*><T:JSONParsable> (inout left: T!, right: AnyObject?) -> T! {
+public func <*><T:JSONParsable> (inout left: T!, right: AnyObject?) -> T! {
     if let dictionary = right as? [String: AnyObject] {
         left = (T.self as T.Type)(JSON: NKJSON(dictionary: dictionary))
     }
     return left
 }
 
-func <|*|><T:JSONParsable>(inout left: [T], right: AnyObject?) -> [T] {
+public func <|*|><T:JSONParsable>(inout left: [T], right: AnyObject?) -> [T] {
     if let array = right as? [AnyObject] {
         var allObjects = Array<T>()
         for dictionary in array {
@@ -84,7 +85,7 @@ func <|*|><T:JSONParsable>(inout left: [T], right: AnyObject?) -> [T] {
     return left
 }
 
-func <|*|><T:JSONParsable>(inout left: [T]?, right: AnyObject?) -> [T]? {
+public func <|*|><T:JSONParsable>(inout left: [T]?, right: AnyObject?) -> [T]? {
     if let array = right as? [AnyObject] {
         var allObjects = Array<T>()
         for dictionary in array {
@@ -100,7 +101,7 @@ func <|*|><T:JSONParsable>(inout left: [T]?, right: AnyObject?) -> [T]? {
     return left
 }
 
-func <|*|><T:JSONParsable>(inout left: [T]!, right: AnyObject?) -> [T]! {
+public func <|*|><T:JSONParsable>(inout left: [T]!, right: AnyObject?) -> [T]! {
     if let array = right as? [AnyObject] {
         var allObjects = Array<T>()
         for dictionary in array {
@@ -116,7 +117,7 @@ func <|*|><T:JSONParsable>(inout left: [T]!, right: AnyObject?) -> [T]! {
     return left
 }
 
-func <|*|*|><T:JSONParsable>(inout left: [String: T], right: AnyObject?) ->  [String: T] {
+public func <|*|*|><T:JSONParsable>(inout left: [String: T], right: AnyObject?) ->  [String: T] {
     if let mainDictionary = right as? [String: AnyObject] {
         var allObjects: [String: T] = [:]
         for (key: String, dictionary: AnyObject) in mainDictionary {
@@ -132,7 +133,7 @@ func <|*|*|><T:JSONParsable>(inout left: [String: T], right: AnyObject?) ->  [St
     return left
 }
 
-func <|*|*|><T:JSONParsable>(inout left: [String: T]?, right: AnyObject?) -> [String: T]? {
+public func <|*|*|><T:JSONParsable>(inout left: [String: T]?, right: AnyObject?) -> [String: T]? {
     if let mainDictionary = right as? [String: AnyObject] {
         var allObjects: [String: T] = [:]
         for (key: String, dictionary: AnyObject) in mainDictionary {
@@ -148,7 +149,7 @@ func <|*|*|><T:JSONParsable>(inout left: [String: T]?, right: AnyObject?) -> [St
     return left
 }
 
-func <|*|*|><T:JSONParsable>(inout left: [String: T]!, right: AnyObject?) -> [String: T]! {
+public func <|*|*|><T:JSONParsable>(inout left: [String: T]!, right: AnyObject?) -> [String: T]! {
     if let mainDictionary = right as? [String: AnyObject] {
         var allObjects: [String: T] = [:]
         for (key: String, dictionary: AnyObject) in mainDictionary {
