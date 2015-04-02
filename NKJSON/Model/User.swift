@@ -8,7 +8,7 @@
 
 import Foundation
 
-class User: JSONParsable {
+class User: NKJSONParsable {
     
     var name: String!
     var id: UserID!
