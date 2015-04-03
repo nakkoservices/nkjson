@@ -27,6 +27,28 @@ public func <<>><T>(left: AnyObject?, callback: (object: AnyObject?) -> T?) -> T
     return callback(object: left)
 }
 
+public func <><T> (inout left: T, right: Any) -> T {
+    if let value = right as? T {
+        left = value
+    }
+    return left
+}
+
+public func <><T> (inout left: T?, right: Any) -> T? {
+    if let value = right as? T {
+        left = value
+    }
+    return left
+}
+
+public func <><T> (inout left: T!, right: Any) -> T! {
+    if let value = right as? T {
+        left = value
+        println("<>: \(left) | \(right)")
+    }
+    return left
+}
+
 public func <><T> (inout left: T, right: AnyObject?) -> T {
     if let value = right as? T {
         left = value
