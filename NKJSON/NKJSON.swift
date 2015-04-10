@@ -27,24 +27,23 @@ public func <<>><T>(left: AnyObject?, callback: (object: AnyObject?) -> T?) -> T
     return callback(object: left)
 }
 
-public func <><T> (inout left: T, right: Any) -> T {
+public func <><T> (inout left: T, right: Any?) -> T {
     if let value = right as? T {
         left = value
     }
     return left
 }
 
-public func <><T> (inout left: T?, right: Any) -> T? {
+public func <><T> (inout left: T?, right: Any?) -> T? {
     if let value = right as? T {
         left = value
     }
     return left
 }
 
-public func <><T> (inout left: T!, right: Any) -> T! {
+public func <><T> (inout left: T!, right: Any?) -> T! {
     if let value = right as? T {
         left = value
-        println("<>: \(left) | \(right)")
     }
     return left
 }
@@ -249,9 +248,9 @@ public class NKJSON {
     
     public class func parse<T:NKJSONParsable>(JSONData: NSData?) -> [T]? {
         if let data = JSONData {
-            if let result: [AnyObject] = NSJSONSerialization.JSONObjectWithData(data, options: nil, error: nil) as? [AnyObject] {
+            if let result: [[String: AnyObject]] = NSJSONSerialization.JSONObjectWithData(data, options: nil, error: nil) as? [[String: AnyObject]] {
                 var allObjects: [T] = []
-                for objectInfo in result as [[String: AnyObject]] {
+                for objectInfo in result {
                     allObjects.append((T.self as T.Type)(JSON: NKJSON(dictionary: objectInfo)))
                 }
                 return allObjects

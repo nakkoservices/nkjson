@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 Nakko. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 class User: NKJSONParsable {
     
@@ -16,6 +16,7 @@ class User: NKJSONParsable {
     var languages: [AnyObject]!
     var parents: [String: User]!
     var birthDate: NSDate!
+    var size: CGSize!
     
     func dateFormatter(object: AnyObject?) -> NSDate? {
         if let dateString = object as? String {
@@ -27,6 +28,17 @@ class User: NKJSONParsable {
         return nil
     }
     
+    func toCGSize(object: AnyObject?) -> CGSize? {
+        if let dictionary = object as? [String: CGFloat] {
+            if let width = dictionary["width"] {
+                if let height = dictionary["height"] {
+                    return CGSizeMake(width, height)
+                }
+            }
+        }
+        return nil
+    }
+    
     required init(JSON: NKJSON) {
         name <> JSON["name"]
         id <*> JSON["id"]
@@ -34,6 +46,11 @@ class User: NKJSONParsable {
         languages <> JSON["languages"]
         parents <|*|*|> JSON["parents"]
         birthDate <> JSON["birthDate"] <<>> dateFormatter
+        
+        
+        println(self.name)
+        println(JSON["size"])
+        size <> JSON["size"] <<>> toCGSize
     }
     
 }

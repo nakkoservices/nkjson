@@ -10,7 +10,7 @@ import UIKit
 
 class ViewController: UIViewController {
 
-    var JSONString = "{\"data\": {\"birthDate\": \"19.09.1988\", \"name\": \"Mickey\", \"id\": {\"series\": \"B\", \"number\": 2}, \"parents\": {\"father\": {\"name\": \"Florin\", \"id\": {\"series\": \"B\", \"number\": 0}}}, \"languages\": [\"Romanian\", 123], \"siblings\": [{\"name\": \"Andu\", \"userID\": {\"series\": \"B\", \"number\": 1}}, {\"name\": \"Kitty\", \"id\": {\"series\": \"F\", \"number\": 3}}]}}"
+    var JSONString = "{\"data\": {\"size\": {\"width\": 200, \"height\": 100} , \"birthDate\": \"19.09.1988\", \"name\": \"Mickey\", \"id\": {\"series\": \"B\", \"number\": 2}, \"parents\": {\"father\": {\"name\": \"Florin\", \"id\": {\"series\": \"B\", \"number\": 0}}}, \"languages\": [\"Romanian\", 123], \"siblings\": [{\"name\": \"Andu\", \"userID\": {\"series\": \"B\", \"number\": 1}}, {\"name\": \"Kitty\", \"id\": {\"series\": \"F\", \"number\": 3}}]}}"
     
     override func viewDidLoad() {
         super.viewDidLoad()
