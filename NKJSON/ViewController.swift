@@ -17,19 +17,19 @@ class ViewController: UIViewController {
         // Do any additional setup after loading the view, typically from a nib.
         
         if let user: User = NKJSON.parse(JSONString, key: "data") {
-            println("Hey \(user.name)! I see you have your ID with you. Series is \(user.id.series) and the number is \(user.id.number)")
-            println("Is your birthday today? Oh no! I see you were born on \(user.birthDate)")
-            println("It seems like you have \(user.siblings.count) siblings. One is \(user.siblings[0].name) and the other one is \(user.siblings[1].name)")
-            println("You can speak \(user.languages.count) languages and by that I mean \(user.languages[0]) and \(user.languages[1]), whatever that is...")
-            println("Oh yeah! And your parents are as follows:")
+            print("Hey \(user.name)! I see you have your ID with you. Series is \(user.id.series) and the number is \(user.id.number)")
+            print("Is your birthday today? Oh no! I see you were born on \(user.birthDate)")
+            print("It seems like you have \(user.siblings.count) siblings. One is \(user.siblings[0].name) and the other one is \(user.siblings[1].name)")
+            print("You can speak \(user.languages.count) languages and by that I mean \(user.languages[0]) and \(user.languages[1]), whatever that is...")
+            print("Oh yeah! And your parents are as follows:")
             
             for (parentType, parent) in user.parents {
-                println("\(parentType): \(parent.name)")
+                print("\(parentType): \(parent.name)")
             }
         }
         
         if let brother: User = NKJSON.parse(JSONString, key: "data.siblings.0") {
-            println("Brother's name is \(brother.name)")
+            print("Brother's name is \(brother.name)")
         }
     }
 

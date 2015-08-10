@@ -71,21 +71,21 @@ public func <><T> (inout left: T!, right: AnyObject?) -> T! {
 
 public func <*><T:NKJSONParsable> (inout left: T, right: AnyObject?) -> T {
     if let dictionary = right as? [String: AnyObject] {
-        left = (T.self as T.Type)(JSON: NKJSON(dictionary: dictionary))
+        left = (T.self as T.Type).init(JSON: NKJSON(dictionary: dictionary))
     }
     return left
 }
 
 public func <*><T:NKJSONParsable> (inout left: T?, right: AnyObject?) -> T? {
     if let dictionary = right as? [String: AnyObject] {
-        left = (T.self as T.Type)(JSON: NKJSON(dictionary: dictionary))
+        left = (T.self as T.Type).init(JSON: NKJSON(dictionary: dictionary))
     }
     return left
 }
 
 public func <*><T:NKJSONParsable> (inout left: T!, right: AnyObject?) -> T! {
     if let dictionary = right as? [String: AnyObject] {
-        left = (T.self as T.Type)(JSON: NKJSON(dictionary: dictionary))
+        left = (T.self as T.Type).init(JSON: NKJSON(dictionary: dictionary))
     }
     return left
 }
@@ -141,7 +141,7 @@ public func <|*|><T:NKJSONParsable>(inout left: [T]!, right: AnyObject?) -> [T]!
 public func <|*|*|><T:NKJSONParsable>(inout left: [String: T], right: AnyObject?) ->  [String: T] {
     if let mainDictionary = right as? [String: AnyObject] {
         var allObjects: [String: T] = [:]
-        for (key: String, dictionary: AnyObject) in mainDictionary {
+        for (key, dictionary): (String, AnyObject) in mainDictionary {
             var object: T!
             object <*> dictionary
             if object != nil {
@@ -157,7 +157,7 @@ public func <|*|*|><T:NKJSONParsable>(inout left: [String: T], right: AnyObject?
 public func <|*|*|><T:NKJSONParsable>(inout left: [String: T]?, right: AnyObject?) -> [String: T]? {
     if let mainDictionary = right as? [String: AnyObject] {
         var allObjects: [String: T] = [:]
-        for (key: String, dictionary: AnyObject) in mainDictionary {
+        for (key, dictionary): (String, AnyObject) in mainDictionary {
             var object: T!
             object <*> dictionary
             if object != nil {
@@ -173,7 +173,7 @@ public func <|*|*|><T:NKJSONParsable>(inout left: [String: T]?, right: AnyObject
 public func <|*|*|><T:NKJSONParsable>(inout left: [String: T]!, right: AnyObject?) -> [String: T]! {
     if let mainDictionary = right as? [String: AnyObject] {
         var allObjects: [String: T] = [:]
-        for (key: String, dictionary: AnyObject) in mainDictionary {
+        for (key, dictionary): (String, AnyObject) in mainDictionary {
             var object: T!
             object <*> dictionary
             if object != nil {
@@ -216,8 +216,13 @@ public class NKJSON {
     
     public class func parse(JSONData: NSData?) -> NKJSON? {
         if let data = JSONData {
-            if let result: [String: AnyObject] = NSJSONSerialization.JSONObjectWithData(data, options: nil, error: nil) as? [String: AnyObject] {
-                return NKJSON(dictionary: result)
+            do {
+                if let result: [String: AnyObject] = try NSJSONSerialization.JSONObjectWithData(data, options: []) as? [String: AnyObject] {
+                    return NKJSON(dictionary: result)
+                }
+            }
+            catch {
+                return nil
             }
         }
         return nil
@@ -225,8 +230,13 @@ public class NKJSON {
     
     public class func parse<T:NKJSONParsable>(JSONData: NSData?) -> T? {
         if let data = JSONData {
-            if let result: [String: AnyObject] = NSJSONSerialization.JSONObjectWithData(data, options: nil, error: nil) as? [String: AnyObject] {
-                return (T.self as T.Type)(JSON: NKJSON(dictionary: result))
+            do {
+                if let result: [String: AnyObject] = try NSJSONSerialization.JSONObjectWithData(data, options: []) as? [String: AnyObject] {
+                    return (T.self as T.Type).init(JSON: NKJSON(dictionary: result))
+                }
+            }
+            catch {
+                return nil
             }
         }
         
@@ -235,11 +245,16 @@ public class NKJSON {
     
     public class func parse<T:NKJSONParsable>(JSONData: NSData?, key: String) -> T? {
         if let data = JSONData {
-            if let result: [String: AnyObject] = NSJSONSerialization.JSONObjectWithData(data, options: nil, error: nil) as? [String: AnyObject] {
-                let JSON: NKJSON = NKJSON(dictionary: result)
-                if let objectInfo = JSON[key] as? [String: AnyObject] {
-                    return (T.self as T.Type)(JSON: NKJSON(dictionary: objectInfo))
+            do {
+                if let result: [String: AnyObject] = try NSJSONSerialization.JSONObjectWithData(data, options: []) as? [String: AnyObject] {
+                    let JSON: NKJSON = NKJSON(dictionary: result)
+                    if let objectInfo = JSON[key] as? [String: AnyObject] {
+                        return (T.self as T.Type).init(JSON: NKJSON(dictionary: objectInfo))
+                    }
                 }
+            }
+            catch {
+                return nil
             }
         }
         
@@ -248,12 +263,17 @@ public class NKJSON {
     
     public class func parse<T:NKJSONParsable>(JSONData: NSData?) -> [T]? {
         if let data = JSONData {
-            if let result: [[String: AnyObject]] = NSJSONSerialization.JSONObjectWithData(data, options: nil, error: nil) as? [[String: AnyObject]] {
-                var allObjects: [T] = []
-                for objectInfo in result {
-                    allObjects.append((T.self as T.Type)(JSON: NKJSON(dictionary: objectInfo)))
+            do {
+                if let result: [[String: AnyObject]] = try NSJSONSerialization.JSONObjectWithData(data, options: []) as? [[String: AnyObject]] {
+                    var allObjects: [T] = []
+                    for objectInfo in result {
+                        allObjects.append((T.self as T.Type).init(JSON: NKJSON(dictionary: objectInfo)))
+                    }
+                    return allObjects
                 }
-                return allObjects
+            }
+            catch {
+                return nil
             }
         }
         
@@ -262,15 +282,20 @@ public class NKJSON {
     
     public class func parse<T:NKJSONParsable>(JSONData: NSData?, key: String) -> [T]? {
         if let data = JSONData {
-            if let result: [String: AnyObject] = NSJSONSerialization.JSONObjectWithData(data, options: nil, error: nil) as? [String: AnyObject] {
-                let JSON: NKJSON = NKJSON(dictionary: result)
-                if let objectInfos = JSON[key] as? [[String: AnyObject]] {
-                    var allObjects: [T] = []
-                    for objectInfo in objectInfos {
-                        allObjects.append((T.self as T.Type)(JSON: NKJSON(dictionary: objectInfo)))
+            do {
+                if let result: [String: AnyObject] = try NSJSONSerialization.JSONObjectWithData(data, options: []) as? [String: AnyObject] {
+                    let JSON: NKJSON = NKJSON(dictionary: result)
+                    if let objectInfos = JSON[key] as? [[String: AnyObject]] {
+                        var allObjects: [T] = []
+                        for objectInfo in objectInfos {
+                            allObjects.append((T.self as T.Type).init(JSON: NKJSON(dictionary: objectInfo)))
+                        }
+                        return allObjects
                     }
-                    return allObjects
                 }
+            }
+            catch {
+                return nil
             }
         }
         
@@ -286,7 +311,7 @@ public class NKJSON {
             return nil
         }
         
-        if let intKey = keys.first?.toInt() {
+        if let intKey = Int(keys.first!) {
             if keys.count > 1 {
                 if let newDictionary = array[intKey] as? [String: AnyObject] {
                     return getValue(Array(keys[1..<keys.count]), dictionary: newDictionary)

@@ -48,8 +48,8 @@ class User: NKJSONParsable {
         birthDate <> JSON["birthDate"] <<>> dateFormatter
         
         
-        println(self.name)
-        println(JSON["size"])
+        print(self.name)
+        print(JSON["size"])
         size <> JSON["size"] <<>> toCGSize
     }
     

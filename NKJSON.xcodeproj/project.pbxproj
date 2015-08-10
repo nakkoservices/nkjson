@@ -173,6 +173,8 @@
 		C0EC4DFC1AA04BDB00511755 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftMigration = 0700;
+				LastSwiftUpdateCheck = 0700;
 				LastUpgradeCheck = 0610;
 				ORGANIZATIONNAME = Nakko;
 				TargetAttributes = {
@@ -425,6 +427,7 @@
 				C0EC4E251AA04BDC00511755 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		C0EC4E261AA04BDC00511755 /* Build configuration list for PBXNativeTarget "NKJSONTests" */ = {
 			isa = XCConfigurationList;
@@ -433,6 +436,7 @@
 				C0EC4E281AA04BDC00511755 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
