@@ -71,7 +71,9 @@ public func <><T> (inout left: T!, right: AnyObject?) -> T! {
 
 public func <*><T:NKJSONParsable> (inout left: T, right: AnyObject?) -> T {
     if let dictionary = right as? [String: AnyObject] {
-        left = (T.self as T.Type).init(JSON: NKJSON(dictionary: dictionary))
+        if let object = (T.self as T.Type).init(JSON: NKJSON(dictionary: dictionary)) {
+            left = object
+        }
     }
     return left
 }
@@ -267,7 +269,9 @@ public class NKJSON {
                 if let result: [[String: AnyObject]] = try NSJSONSerialization.JSONObjectWithData(data, options: []) as? [[String: AnyObject]] {
                     var allObjects: [T] = []
                     for objectInfo in result {
-                        allObjects.append((T.self as T.Type).init(JSON: NKJSON(dictionary: objectInfo)))
+                        if let object = (T.self as T.Type).init(JSON: NKJSON(dictionary: objectInfo)) {
+                            allObjects.append(object)
+                        }
                     }
                     return allObjects
                 }
@@ -288,7 +292,10 @@ public class NKJSON {
                     if let objectInfos = JSON[key] as? [[String: AnyObject]] {
                         var allObjects: [T] = []
                         for objectInfo in objectInfos {
-                            allObjects.append((T.self as T.Type).init(JSON: NKJSON(dictionary: objectInfo)))
+                            if let object = (T.self as T.Type).init(JSON: NKJSON(dictionary: objectInfo))
+                            {
+                                allObjects.append(object)
+                            }
                         }
                         return allObjects
                     }
@@ -364,6 +371,6 @@ public class NKJSON {
 
 public protocol NKJSONParsable {
     
-    init(JSON: NKJSON)
+    init?(JSON: NKJSON)
     
 }
