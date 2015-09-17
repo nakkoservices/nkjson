@@ -190,11 +190,17 @@ public func <|*|*|><T:NKJSONParsable>(inout left: [String: T]!, right: AnyObject
 
 public class NKJSON {
     
-    private var resultDictionary: [String: AnyObject]! = nil
+    // MARK: - Public class vars
     
     public class var rootKey: String {
         return "__root"
     }
+    
+    // MARK: - Private instance vars
+    
+    private var resultDictionary: [String: AnyObject]! = nil
+    
+    // MARK: - Public class methods
     
     public class func parse(JSONString: String) -> NKJSON? {
         return parse(JSONString.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: true))
@@ -309,6 +315,8 @@ public class NKJSON {
         return nil
     }
     
+    // MARK: - Private instance methods
+    
     private init(dictionary: [String: AnyObject]) {
         resultDictionary = dictionary
     }
@@ -365,6 +373,48 @@ public class NKJSON {
         }
         
         return getValue(key.componentsSeparatedByString("."), dictionary: resultDictionary)
+    }
+    
+    // MARK: - Helper methods
+    
+    public class func toBool(object: AnyObject?) -> Bool? {
+        guard let bool = object as? Bool else {
+            guard let boolString = object as? NSString else {
+                return nil
+            }
+            
+            return boolString.boolValue
+        }
+        
+        return bool
+    }
+    
+    public class func toCGSize(object: AnyObject?) -> CGSize? {
+        guard let dictionary = object as? [String: CGFloat] else {
+            guard let dictionary = object as? [String: NSString] else {
+                return nil
+            }
+            
+            guard let width = dictionary["width"] else {
+                return nil
+            }
+            
+            guard let height = dictionary["height"] else {
+                return nil
+            }
+            
+            return CGSizeMake(CGFloat(width.floatValue), CGFloat(height.floatValue))
+        }
+        
+        guard let width = dictionary["width"] else {
+            return nil
+        }
+        
+        guard let height = dictionary["height"] else {
+            return nil
+        }
+        
+        return CGSizeMake(width, height)
     }
     
 }
