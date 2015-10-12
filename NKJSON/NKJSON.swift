@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 // Extract a Foundation object
 infix operator <> {}
@@ -376,6 +377,16 @@ public class NKJSON {
     }
     
     // MARK: - Helper methods
+    
+    public class func toFloat(object: AnyObject?) -> Float? {
+        guard let float = object as? Float else {
+            guard let floatString = object as? NSString else {
+                return nil
+            }
+            return floatString.floatValue
+        }
+        return float
+    }
     
     public class func toBool(object: AnyObject?) -> Bool? {
         guard let bool = object as? Bool else {
