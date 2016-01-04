@@ -378,6 +378,16 @@ public class NKJSON {
     
     // MARK: - Helper methods
     
+    public class func toInt(object: AnyObject?) -> Int? {
+        guard let int = object as? Int else {
+            guard let intString = object as? NSString else {
+                return nil
+            }
+            return intString.integerValue
+        }
+        return int
+    }
+    
     public class func toFloat(object: AnyObject?) -> Float? {
         guard let float = object as? Float else {
             guard let floatString = object as? NSString else {
