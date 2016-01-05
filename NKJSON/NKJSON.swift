@@ -316,6 +316,42 @@ public class NKJSON {
         return nil
     }
     
+    public class func parseFile<T:NKJSONParsable>(filePath: String) -> T? {
+        do {
+            return parse(try String(contentsOfFile: filePath))
+        }
+        catch {
+            return nil
+        }
+    }
+    
+    public class func parseFile<T:NKJSONParsable>(filePath: String, key: String) -> T? {
+        do {
+            return parse(try String(contentsOfFile: filePath), key: key)
+        }
+        catch {
+            return nil
+        }
+    }
+    
+    public class func parseFile<T:NKJSONParsable>(filePath: String) -> [T]? {
+        do {
+            return parse(try String(contentsOfFile: filePath))
+        }
+        catch {
+            return nil
+        }
+    }
+    
+    public class func parseFile<T:NKJSONParsable>(filePath: String, key: String) -> [T]? {
+        do {
+            return parse(try String(contentsOfFile: filePath), key: key)
+        }
+        catch {
+            return nil
+        }
+    }
+    
     // MARK: - Private instance methods
     
     private init(dictionary: [String: AnyObject]) {
