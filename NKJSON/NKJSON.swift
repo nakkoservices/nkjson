@@ -446,6 +446,13 @@ public class NKJSON {
         return bool
     }
     
+    public class func toCGFloat(object: AnyObject?) -> CGFloat? {
+        guard let float = toFloat(object) else {
+            return nil
+        }
+        return CGFloat(float)
+    }
+    
     public class func toCGSize(object: AnyObject?) -> CGSize? {
         guard let dictionary = object as? [String: CGFloat] else {
             guard let dictionary = object as? [String: NSString] else {
@@ -472,6 +479,34 @@ public class NKJSON {
         }
         
         return CGSizeMake(width, height)
+    }
+    
+    public class func toCGPoint(object: AnyObject?) -> CGPoint? {
+        guard let dictionary = object as? [String: CGFloat] else {
+            guard let dictionary = object as? [String: NSString] else {
+                return nil
+            }
+            
+            guard let x = dictionary["x"] else {
+                return nil
+            }
+            
+            guard let y = dictionary["y"] else {
+                return nil
+            }
+            
+            return CGPointMake(CGFloat(x.floatValue), CGFloat(y.floatValue))
+        }
+        
+        guard let x = dictionary["x"] else {
+            return nil
+        }
+        
+        guard let y = dictionary["y"] else {
+            return nil
+        }
+        
+        return CGPointMake(x, y)
     }
     
 }
