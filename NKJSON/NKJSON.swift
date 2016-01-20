@@ -352,11 +352,11 @@ public class NKJSON {
         }
     }
     
-    // MARK: - Private instance methods
-    
-    private init(dictionary: [String: AnyObject]) {
+    public init(dictionary: [String: AnyObject]) {
         resultDictionary = dictionary
     }
+    
+    // MARK: - Private instance methods
     
     private func getValue(keys: [String], array: [AnyObject]) -> AnyObject? {
         if keys.isEmpty {
