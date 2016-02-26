@@ -364,6 +364,9 @@ public class NKJSON {
         }
         
         if let intKey = Int(keys.first!) {
+            if array.count <= intKey || intKey < 0 {
+                return nil
+            }
             if keys.count > 1 {
                 if let newDictionary = array[intKey] as? [String: AnyObject] {
                     return getValue(Array(keys[1..<keys.count]), dictionary: newDictionary)
@@ -410,6 +413,16 @@ public class NKJSON {
         }
         
         return getValue(key.componentsSeparatedByString("."), dictionary: resultDictionary)
+    }
+    
+    public subscript(keys: [String]) -> AnyObject? {
+        for key in keys {
+            guard let value = self[key] else {
+                continue
+            }
+            return value
+        }
+        return nil
     }
     
     // MARK: - Helper methods
