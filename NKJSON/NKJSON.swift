@@ -197,6 +197,8 @@ public class NKJSON {
         return "__root"
     }
     
+    public static var dateFormat: String = "YYYY-MM-dd'T'HH:mm:ssZZZZZ"
+    
     // MARK: - Private instance vars
     
     private var resultDictionary: [String: AnyObject]! = nil
@@ -522,10 +524,40 @@ public class NKJSON {
         return CGPointMake(x, y)
     }
     
+    public class func toDate(object: AnyObject?) -> NSDate? {
+        guard let dateString = object as? String else {
+            return nil
+        }
+        
+        guard let date = dateString.detectDates()?.first else {
+            let dateFormatter = NSDateFormatter()
+            dateFormatter.dateFormat = dateFormat
+            return dateFormatter.dateFromString(dateString)
+        }
+        
+        return date
+    }
+    
 }
 
 public protocol NKJSONParsable {
     
     init?(JSON: NKJSON)
+    
+}
+
+extension String {
+    
+    func detectDates() -> [NSDate]? {
+        do {
+            return try NSDataDetector(types: NSTextCheckingType.Date.rawValue)
+                .matchesInString(self, options: [], range: NSRange(0..<characters.count))
+                .filter{$0.resultType == .Date}
+                .flatMap{$0.date}
+        } catch let error as NSError {
+            print(error.localizedDescription)
+            return nil
+        }
+    }
     
 }
