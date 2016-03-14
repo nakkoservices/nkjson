@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
     s.name = 'NKJSON'
-    s.version = '1.0.14'
+    s.version = '1.0.15'
     s.license = 'MIT'
     s.summary = 'The Swift class you were missing for those pesky JSON chunks of data'
     s.homepage = 'https://github.com/nakkoservices/nkjson'

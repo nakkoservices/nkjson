@@ -529,10 +529,12 @@ public class NKJSON {
             return nil
         }
         
-        guard let date = dateString.detectDates()?.first else {
-            let dateFormatter = NSDateFormatter()
-            dateFormatter.dateFormat = dateFormat
-            return dateFormatter.dateFromString(dateString)
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.timeZone = NSTimeZone(abbreviation: "CET")!
+        dateFormatter.dateFormat = dateFormat
+        
+        guard let date = dateFormatter.dateFromString(dateString) else {
+            return dateString.detectDates()?.first
         }
         
         return date
