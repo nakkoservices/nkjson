@@ -540,6 +540,13 @@ public class NKJSON {
         return date
     }
     
+    public class func toNilIfEmpty(object: AnyObject?) -> String? {
+        guard let string = (object as? String)?.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet()) else {
+            return nil
+        }
+        return string.characters.count > 0 ? string : nil
+    }
+    
 }
 
 public protocol NKJSONParsable {
