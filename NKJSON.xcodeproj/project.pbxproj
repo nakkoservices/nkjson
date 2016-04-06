@@ -12,21 +12,10 @@
 		C0EC4E0F1AA04BDC00511755 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C0EC4E0D1AA04BDC00511755 /* Main.storyboard */; };
 		C0EC4E111AA04BDC00511755 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C0EC4E101AA04BDC00511755 /* Images.xcassets */; };
 		C0EC4E141AA04BDC00511755 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = C0EC4E121AA04BDC00511755 /* LaunchScreen.xib */; };
-		C0EC4E201AA04BDC00511755 /* NKJSONTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0EC4E1F1AA04BDC00511755 /* NKJSONTests.swift */; };
 		C0EC4E2A1AA04BEE00511755 /* NKJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0EC4E291AA04BEE00511755 /* NKJSON.swift */; };
 		C0EC4E2D1AA04C2E00511755 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0EC4E2C1AA04C2E00511755 /* User.swift */; };
 		C0EC4E2F1AA04C3700511755 /* UserID.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0EC4E2E1AA04C3700511755 /* UserID.swift */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		C0EC4E1A1AA04BDC00511755 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = C0EC4DFC1AA04BDB00511755 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = C0EC4E031AA04BDB00511755;
-			remoteInfo = NKJSON;
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		C0EC4E041AA04BDB00511755 /* NKJSON.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NKJSON.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -36,7 +25,6 @@
 		C0EC4E0E1AA04BDC00511755 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		C0EC4E101AA04BDC00511755 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		C0EC4E131AA04BDC00511755 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
-		C0EC4E191AA04BDC00511755 /* NKJSONTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NKJSONTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C0EC4E1E1AA04BDC00511755 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C0EC4E1F1AA04BDC00511755 /* NKJSONTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NKJSONTests.swift; sourceTree = "<group>"; };
 		C0EC4E291AA04BEE00511755 /* NKJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NKJSON.swift; sourceTree = "<group>"; };
@@ -46,13 +34,6 @@
 
 /* Begin PBXFrameworksBuildPhase section */
 		C0EC4E011AA04BDB00511755 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		C0EC4E161AA04BDC00511755 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -75,7 +56,6 @@
 			isa = PBXGroup;
 			children = (
 				C0EC4E041AA04BDB00511755 /* NKJSON.app */,
-				C0EC4E191AA04BDC00511755 /* NKJSONTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -149,24 +129,6 @@
 			productReference = C0EC4E041AA04BDB00511755 /* NKJSON.app */;
 			productType = "com.apple.product-type.application";
 		};
-		C0EC4E181AA04BDC00511755 /* NKJSONTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = C0EC4E261AA04BDC00511755 /* Build configuration list for PBXNativeTarget "NKJSONTests" */;
-			buildPhases = (
-				C0EC4E151AA04BDC00511755 /* Sources */,
-				C0EC4E161AA04BDC00511755 /* Frameworks */,
-				C0EC4E171AA04BDC00511755 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				C0EC4E1B1AA04BDC00511755 /* PBXTargetDependency */,
-			);
-			name = NKJSONTests;
-			productName = NKJSONTests;
-			productReference = C0EC4E191AA04BDC00511755 /* NKJSONTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -175,15 +137,11 @@
 			attributes = {
 				LastSwiftMigration = 0700;
 				LastSwiftUpdateCheck = 0700;
-				LastUpgradeCheck = 0610;
+				LastUpgradeCheck = 0730;
 				ORGANIZATIONNAME = Nakko;
 				TargetAttributes = {
 					C0EC4E031AA04BDB00511755 = {
 						CreatedOnToolsVersion = 6.1.1;
-					};
-					C0EC4E181AA04BDC00511755 = {
-						CreatedOnToolsVersion = 6.1.1;
-						TestTargetID = C0EC4E031AA04BDB00511755;
 					};
 				};
 			};
@@ -201,7 +159,6 @@
 			projectRoot = "";
 			targets = (
 				C0EC4E031AA04BDB00511755 /* NKJSON */,
-				C0EC4E181AA04BDC00511755 /* NKJSONTests */,
 			);
 		};
 /* End PBXProject section */
@@ -214,13 +171,6 @@
 				C0EC4E0F1AA04BDC00511755 /* Main.storyboard in Resources */,
 				C0EC4E141AA04BDC00511755 /* LaunchScreen.xib in Resources */,
 				C0EC4E111AA04BDC00511755 /* Images.xcassets in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		C0EC4E171AA04BDC00511755 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -239,23 +189,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		C0EC4E151AA04BDC00511755 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				C0EC4E201AA04BDC00511755 /* NKJSONTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		C0EC4E1B1AA04BDC00511755 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = C0EC4E031AA04BDB00511755 /* NKJSON */;
-			targetProxy = C0EC4E1A1AA04BDC00511755 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		C0EC4E0D1AA04BDC00511755 /* Main.storyboard */ = {
@@ -297,6 +231,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -360,6 +295,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = NKJSON/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.nakko.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -370,41 +306,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = NKJSON/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.nakko.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Release;
-		};
-		C0EC4E271AA04BDC00511755 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = NKJSONTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/NKJSON.app/NKJSON";
-			};
-			name = Debug;
-		};
-		C0EC4E281AA04BDC00511755 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = NKJSONTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/NKJSON.app/NKJSON";
 			};
 			name = Release;
 		};
@@ -425,15 +328,6 @@
 			buildConfigurations = (
 				C0EC4E241AA04BDC00511755 /* Debug */,
 				C0EC4E251AA04BDC00511755 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		C0EC4E261AA04BDC00511755 /* Build configuration list for PBXNativeTarget "NKJSONTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				C0EC4E271AA04BDC00511755 /* Debug */,
-				C0EC4E281AA04BDC00511755 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

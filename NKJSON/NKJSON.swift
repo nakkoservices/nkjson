@@ -243,7 +243,7 @@ public class NKJSON {
                     
                     let JSON: NKJSON = NKJSON(dictionary: result)
                     if let object = JSON[key] as? T {
-                        return object as? T
+                        return object
                     }
                     else if let objectInfo = JSON[key] as? [String: AnyObject] {
                         return (T.self as T.Type).init(JSON: NKJSON(dictionary: objectInfo))
@@ -375,7 +375,7 @@ public class NKJSON {
             return resultDictionary
         }
         
-        var finalKey = (key as String).stringByReplacingOccurrencesOfString("\\.", withString: dotReplacement)
+        let finalKey = (key as String).stringByReplacingOccurrencesOfString("\\.", withString: dotReplacement)
         return getValue(finalKey.componentsSeparatedByString("."), dictionary: resultDictionary)
     }
     
