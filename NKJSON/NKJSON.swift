@@ -9,6 +9,8 @@
 import Foundation
 import UIKit
 
+private let dotReplacement = "_|_DOT_|_"
+
 // Extract a Foundation object
 infix operator <> {}
 
@@ -209,19 +211,11 @@ public class NKJSON {
         return parse(JSONString.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: true))
     }
     
-    public class func parse<T:NKJSONParsable>(JSONString: String) -> T? {
-        return parse(JSONString.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: true))
-    }
-    
-    public class func parse<T:NKJSONParsable>(JSONString: String, key: String) -> T? {
+    public class func parse<T:NKJSONParsable>(JSONString: String, key: String? = nil) -> T? {
         return parse(JSONString.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: true), key: key)
     }
     
-    public class func parse<T:NKJSONParsable>(JSONString: String) -> [T]? {
-        return parse(JSONString.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: true))
-    }
-    
-    public class func parse<T:NKJSONParsable>(JSONString: String, key: String) -> [T]? {
+    public class func parse<T:NKJSONParsable>(JSONString: String, key: String? = nil) -> [T]? {
         return parse(JSONString.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: true), key: key)
     }
     
@@ -239,27 +233,19 @@ public class NKJSON {
         return nil
     }
     
-    public class func parse<T:NKJSONParsable>(JSONData: NSData?) -> T? {
+    public class func parse<T:NKJSONParsable>(JSONData: NSData?, key: String? = nil) -> T? {
         if let data = JSONData {
             do {
                 if let result: [String: AnyObject] = try NSJSONSerialization.JSONObjectWithData(data, options: []) as? [String: AnyObject] {
-                    return (T.self as T.Type).init(JSON: NKJSON(dictionary: result))
-                }
-            }
-            catch {
-                return nil
-            }
-        }
-        
-        return nil
-    }
-    
-    public class func parse<T:NKJSONParsable>(JSONData: NSData?, key: String) -> T? {
-        if let data = JSONData {
-            do {
-                if let result: [String: AnyObject] = try NSJSONSerialization.JSONObjectWithData(data, options: []) as? [String: AnyObject] {
+                    guard let key = key else {
+                        return (T.self as T.Type).init(JSON: NKJSON(dictionary: result))
+                    }
+                    
                     let JSON: NKJSON = NKJSON(dictionary: result)
-                    if let objectInfo = JSON[key] as? [String: AnyObject] {
+                    if let object = JSON[key] as? T {
+                        return object as? T
+                    }
+                    else if let objectInfo = JSON[key] as? [String: AnyObject] {
                         return (T.self as T.Type).init(JSON: NKJSON(dictionary: objectInfo))
                     }
                 }
@@ -272,30 +258,22 @@ public class NKJSON {
         return nil
     }
     
-    public class func parse<T:NKJSONParsable>(JSONData: NSData?) -> [T]? {
+    public class func parse<T:NKJSONParsable>(JSONData: NSData?, key: String? = nil) -> [T]? {
         if let data = JSONData {
             do {
-                if let result: [[String: AnyObject]] = try NSJSONSerialization.JSONObjectWithData(data, options: []) as? [[String: AnyObject]] {
-                    var allObjects: [T] = []
-                    for objectInfo in result {
-                        if let object = (T.self as T.Type).init(JSON: NKJSON(dictionary: objectInfo)) {
-                            allObjects.append(object)
+                guard let key = key else {
+                    if let result: [[String: AnyObject]] = try NSJSONSerialization.JSONObjectWithData(data, options: []) as? [[String: AnyObject]] {
+                        var allObjects: [T] = []
+                        for objectInfo in result {
+                            if let object = (T.self as T.Type).init(JSON: NKJSON(dictionary: objectInfo)) {
+                                allObjects.append(object)
+                            }
                         }
+                        return allObjects
                     }
-                    return allObjects
+                    return nil
                 }
-            }
-            catch {
-                return nil
-            }
-        }
-        
-        return nil
-    }
-    
-    public class func parse<T:NKJSONParsable>(JSONData: NSData?, key: String) -> [T]? {
-        if let data = JSONData {
-            do {
+                
                 if let result: [String: AnyObject] = try NSJSONSerialization.JSONObjectWithData(data, options: []) as? [String: AnyObject] {
                     let JSON: NKJSON = NKJSON(dictionary: result)
                     if let objectInfos = JSON[key] as? [[String: AnyObject]] {
@@ -318,16 +296,7 @@ public class NKJSON {
         return nil
     }
     
-    public class func parseFile<T:NKJSONParsable>(filePath: String) -> T? {
-        do {
-            return parse(try String(contentsOfFile: filePath))
-        }
-        catch {
-            return nil
-        }
-    }
-    
-    public class func parseFile<T:NKJSONParsable>(filePath: String, key: String) -> T? {
+    public class func parseFile<T:NKJSONParsable>(filePath: String, key: String? = nil) -> T? {
         do {
             return parse(try String(contentsOfFile: filePath), key: key)
         }
@@ -336,16 +305,7 @@ public class NKJSON {
         }
     }
     
-    public class func parseFile<T:NKJSONParsable>(filePath: String) -> [T]? {
-        do {
-            return parse(try String(contentsOfFile: filePath))
-        }
-        catch {
-            return nil
-        }
-    }
-    
-    public class func parseFile<T:NKJSONParsable>(filePath: String, key: String) -> [T]? {
+    public class func parseFile<T:NKJSONParsable>(filePath: String, key: String? = nil) -> [T]? {
         do {
             return parse(try String(contentsOfFile: filePath), key: key)
         }
@@ -392,18 +352,19 @@ public class NKJSON {
             return nil
         }
         
+        let currentKey = (keys.first! as String).stringByReplacingOccurrencesOfString(dotReplacement, withString: ".")
         if keys.count > 1 {
-            if let newDictionary = dictionary[keys.first!] as? [String: AnyObject] {
+            if let newDictionary = dictionary[currentKey] as? [String: AnyObject] {
                 return getValue(Array(keys[1..<keys.count]), dictionary: newDictionary)
             }
             else {
-                if let newArray = dictionary[keys.first!] as? [AnyObject] {
+                if let newArray = dictionary[currentKey] as? [AnyObject] {
                     return getValue(Array(keys[1..<keys.count]), array: newArray)
                 }
             }
         }
         else {
-            return dictionary[keys.first!]
+            return dictionary[currentKey]
         }
         
         return nil
@@ -414,7 +375,8 @@ public class NKJSON {
             return resultDictionary
         }
         
-        return getValue(key.componentsSeparatedByString("."), dictionary: resultDictionary)
+        var finalKey = (key as String).stringByReplacingOccurrencesOfString("\\.", withString: dotReplacement)
+        return getValue(finalKey.componentsSeparatedByString("."), dictionary: resultDictionary)
     }
     
     public subscript(keys: [String]) -> AnyObject? {
