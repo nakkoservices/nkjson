@@ -347,24 +347,92 @@ public class NKJSON {
         return nil
     }
     
+    private func getValue(keys: [String], array: [AnyObject], keyName: String, keyValue: String, valueKey: String) -> AnyObject? {
+        if keys.isEmpty {
+            return nil
+        }
+        
+        
+        
+        return nil
+    }
+    
     private func getValue(keys: [String], dictionary: [String: AnyObject]) -> AnyObject? {
         if keys.isEmpty {
             return nil
         }
         
-        let currentKey = (keys.first! as String).stringByReplacingOccurrencesOfString(dotReplacement, withString: ".")
-        if keys.count > 1 {
-            if let newDictionary = dictionary[currentKey] as? [String: AnyObject] {
-                return getValue(Array(keys[1..<keys.count]), dictionary: newDictionary)
+        var currentKey = (keys.first! as String).stringByReplacingOccurrencesOfString(dotReplacement, withString: ".")
+        
+        do {
+            var regEx = try NSRegularExpression(pattern: "(.*?)(?:\\[(.*?)\\=(.*?)\\|(.*?)\\]|$)", options: [.CaseInsensitive, .DotMatchesLineSeparators])
+            let result = regEx.firstMatchInString(currentKey, options: NSMatchingOptions(rawValue: 0), range: NSMakeRange(0, currentKey.characters.count))!
+            if result.rangeAtIndex(2).location == NSNotFound  {
+                if keys.count > 1 {
+                    if let newDictionary = dictionary[currentKey] as? [String: AnyObject] {
+                        return getValue(Array(keys[1..<keys.count]), dictionary: newDictionary)
+                    }
+                    else {
+                        if let newArray = dictionary[currentKey] as? [AnyObject] {
+                            if keys[1] == "[*]" {
+                                var values: [AnyObject] = []
+                                for value in newArray {
+                                    guard let dictionary = getValue(Array(keys[2..<keys.count]), dictionary: value as! [String : AnyObject]) else {
+                                        continue
+                                    }
+                                    values.append(dictionary)
+                                }
+                                return values
+                            }
+                            return getValue(Array(keys[1..<keys.count]), array: newArray)
+                        }
+                    }
+                }
+                else {
+                    return dictionary[currentKey]
+                }
             }
             else {
-                if let newArray = dictionary[currentKey] as? [AnyObject] {
-                    return getValue(Array(keys[1..<keys.count]), array: newArray)
+                let keyName = (currentKey as NSString).substringWithRange(result.rangeAtIndex(2))
+                let keyValue = (currentKey as NSString).substringWithRange(result.rangeAtIndex(3))
+                let valueKey = (currentKey as NSString).substringWithRange(result.rangeAtIndex(4))
+                currentKey = (currentKey as NSString).substringWithRange(result.rangeAtIndex(1))
+                
+                guard let arrayOfPairs = dictionary[currentKey] as? [[String: AnyObject]] else {
+                    return nil
+                }
+                
+                for pair in arrayOfPairs {
+                    guard let testKeyValue = pair[keyName] as? String where testKeyValue == keyValue else {
+                        continue
+                    }
+                    
+                    if let newDictionary = pair[valueKey] as? [String: AnyObject] {
+                        return getValue(Array(keys[1..<keys.count]), dictionary: newDictionary)
+                    }
+                    else {
+                        if let newArray = pair[valueKey] as? [AnyObject] {
+                            if keys[1] == "[*]" {
+                                var values: [AnyObject] = []
+                                for value in newArray {
+                                    guard let dictionary = getValue(Array(keys[2..<keys.count]), dictionary: value as! [String : AnyObject]) else {
+                                        continue
+                                    }
+                                    values.append(dictionary)
+                                }
+                                return values
+                            }
+                            return getValue(Array(keys[1..<keys.count]), array: newArray)
+                        }
+                        else {
+                            return pair[valueKey]
+                        }
+                    }
                 }
             }
         }
-        else {
-            return dictionary[currentKey]
+        catch _ {
+            fatalError("This should never happen!")
         }
         
         return nil
