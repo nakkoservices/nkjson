@@ -12,32 +12,11 @@ class User: NKJSONParsable {
     
     var name: String!
     var id: UserID!
-    var siblings: [User]!
-    var languages: [AnyObject]!
-    var parents: [String: User]!
-    var birthDate: NSDate!
-    var size: CGSize!
-    
-    func dateFormatter(object: AnyObject?) -> NSDate? {
-        if let dateString = object as? String {
-            let dateFormatter = NSDateFormatter()
-            dateFormatter.locale = NSLocale.systemLocale()
-            dateFormatter.dateFormat = "dd.MM.yyyy"
-            return dateFormatter.dateFromString(dateString)
-        }
-        return nil
-    }
-    
-    func toCGSize(object: AnyObject?) -> CGSize? {
-        if let dictionary = object as? [String: CGFloat] {
-            if let width = dictionary["width"] {
-                if let height = dictionary["height"] {
-                    return CGSizeMake(width, height)
-                }
-            }
-        }
-        return nil
-    }
+    var siblings: [User] = []
+    var languages: [AnyObject] = []
+    var parents: [String: User] = [:]
+    var birthDate: Date?
+    var size: CGSize?
     
     required init(JSON: NKJSON) {
         name <> JSON["name"]
@@ -45,12 +24,9 @@ class User: NKJSONParsable {
         siblings <|*|> JSON["siblings"]
         languages <> JSON["languages"]
         parents <|*|*|> JSON["parents"]
-        birthDate <> JSON["birthDate"] <<>> dateFormatter
+        birthDate <> JSON["birthDate"] <<>> NKJSON.toDate
         
-        
-        print(self.name)
-        print(JSON["size"])
-        size <> JSON["size"] <<>> toCGSize
+        size <> JSON["size"] <<>> NKJSON.toCGSize
     }
     
 }

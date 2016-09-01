@@ -10,13 +10,13 @@ import UIKit
 
 class ViewController: UIViewController {
 
-    var JSONString = "{\"data\": {\"size\": {\"width\": 200, \"height\": 100} , \"birthDate\": \"19.09.1988\", \"name\": \"Mickey\", \"id\": {\"series\": \"B\", \"number\": 2}, \"parents\": {\"father\": {\"name\": \"Florin\", \"id\": {\"series\": \"B\", \"number\": 0}}}, \"languages\": [\"Romanian\", 123], \"siblings\": [{\"name\": \"Andu\", \"userID\": {\"series\": \"B\", \"number\": 1}}, {\"name\": \"Kitty\", \"id\": {\"series\": \"F\", \"number\": 3}}]}}"
+    var JSONString = "{\"data\": {\"size\": {\"width\": 200, \"height\": 100} , \"birthDate\": \"19.09.1988\", \"name\": \"Mickey\", \"id\": {\"series\": \"B\", \"number\": 2}, \"parents\": {\"mother\": {\"name\": \"Cătălina\", \"id\": {\"series\": \"B\", \"number\": 0}}, \"father\": {\"name\": \"Florin\", \"id\": {\"series\": \"B\", \"number\": 0}}}, \"languages\": [\"Romanian\", 123], \"siblings\": [{\"name\": \"Andu\", \"userID\": {\"series\": \"B\", \"number\": 1}}, {\"name\": \"Kitty\", \"id\": {\"series\": \"F\", \"number\": 3}}]}}"
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        if let user: User = NKJSON.parse(JSONString, key: "data") {
+        if let user: User = NKJSON.parse(JSONString: JSONString, key: "data") {
             print("Hey \(user.name)! I see you have your ID with you. Series is \(user.id.series) and the number is \(user.id.number)")
             print("Is your birthday today? Oh no! I see you were born on \(user.birthDate)")
             print("It seems like you have \(user.siblings.count) siblings. One is \(user.siblings[0].name) and the other one is \(user.siblings[1].name)")
@@ -27,9 +27,15 @@ class ViewController: UIViewController {
                 print("\(parentType): \(parent.name)")
             }
         }
+        else {
+            print("Could not parse!")
+        }
         
-        if let brother: User = NKJSON.parse(JSONString, key: "data.siblings.0") {
+        if let brother: User = NKJSON.parse(JSONString: JSONString, key: "data.siblings.0") {
             print("Brother's name is \(brother.name)")
+        }
+        else {
+            print("Could not parse!")
         }
     }
 
