@@ -196,19 +196,19 @@ public class NKJSON {
     
     // MARK: - Public class methods
     
-    public class func parse(JSONString: String) -> NKJSON? {
-        return parse(JSONData: JSONString.data(using: .utf8, allowLossyConversion: true) as NSData?)
+    public class func parse(_ JSONString: String) -> NKJSON? {
+        return parse(JSONString.data(using: .utf8, allowLossyConversion: true) as NSData?)
     }
     
-    public class func parse<T:NKJSONParsable>(JSONString: String, key: String? = nil) -> T? {
-        return parse(JSONData: JSONString.data(using: .utf8, allowLossyConversion: true) as NSData?, key: key)
+    public class func parse<T:NKJSONParsable>(_ JSONString: String, key: String? = nil) -> T? {
+        return parse(JSONString.data(using: .utf8, allowLossyConversion: true) as NSData?, key: key)
     }
     
-    public class func parse<T:NKJSONParsable>(JSONString: String, key: String? = nil) -> [T]? {
-        return parse(JSONData: JSONString.data(using: .utf8, allowLossyConversion: true) as NSData?, key: key)
+    public class func parse<T:NKJSONParsable>(_ JSONString: String, key: String? = nil) -> [T]? {
+        return parse(JSONString.data(using: .utf8, allowLossyConversion: true) as NSData?, key: key)
     }
     
-    public class func parse(JSONData: NSData?) -> NKJSON? {
+    public class func parse(_ JSONData: NSData?) -> NKJSON? {
         if let data = JSONData as? Data {
             do {
                 if let result: [String: AnyObject] = try JSONSerialization.jsonObject(with: data, options: []) as? [String: AnyObject] {
@@ -222,7 +222,7 @@ public class NKJSON {
         return nil
     }
     
-    public class func parse<T:NKJSONParsable>(JSONData: NSData?, key: String? = nil) -> T? {
+    public class func parse<T:NKJSONParsable>(_ JSONData: NSData?, key: String? = nil) -> T? {
         if let data = JSONData as? Data {
             do {
                 if let result: [String: AnyObject] = try JSONSerialization.jsonObject(with: data, options: []) as? [String: AnyObject] {
@@ -247,7 +247,7 @@ public class NKJSON {
         return nil
     }
     
-    public class func parse<T:NKJSONParsable>(JSONData: NSData?, key: String? = nil) -> [T]? {
+    public class func parse<T:NKJSONParsable>(_ JSONData: NSData?, key: String? = nil) -> [T]? {
         if let data = JSONData as? Data {
             do {
                 guard let key = key else {
@@ -285,18 +285,18 @@ public class NKJSON {
         return nil
     }
     
-    public class func parseFile<T:NKJSONParsable>(filePath: String, key: String? = nil) -> T? {
+    public class func parseFile<T:NKJSONParsable>(_ filePath: String, key: String? = nil) -> T? {
         do {
-            return parse(JSONString: try String(contentsOfFile: filePath), key: key)
+            return parse(try String(contentsOfFile: filePath), key: key)
         }
         catch {
             return nil
         }
     }
     
-    public class func parseFile<T:NKJSONParsable>(filePath: String, key: String? = nil) -> [T]? {
+    public class func parseFile<T:NKJSONParsable>(_ filePath: String, key: String? = nil) -> [T]? {
         do {
-            return parse(JSONString: try String(contentsOfFile: filePath), key: key)
+            return parse(try String(contentsOfFile: filePath), key: key)
         }
         catch {
             return nil
