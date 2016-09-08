@@ -197,19 +197,19 @@ public class NKJSON {
     // MARK: - Public class methods
     
     public class func parse(_ JSONString: String) -> NKJSON? {
-        return parse(JSONString.data(using: .utf8, allowLossyConversion: true) as NSData?)
+        return parse(JSONString.data(using: .utf8, allowLossyConversion: true) as Data?)
     }
     
     public class func parse<T:NKJSONParsable>(_ JSONString: String, key: String? = nil) -> T? {
-        return parse(JSONString.data(using: .utf8, allowLossyConversion: true) as NSData?, key: key)
+        return parse(JSONString.data(using: .utf8, allowLossyConversion: true) as Data?, key: key)
     }
     
     public class func parse<T:NKJSONParsable>(_ JSONString: String, key: String? = nil) -> [T]? {
-        return parse(JSONString.data(using: .utf8, allowLossyConversion: true) as NSData?, key: key)
+        return parse(JSONString.data(using: .utf8, allowLossyConversion: true) as Data?, key: key)
     }
     
-    public class func parse(_ JSONData: NSData?) -> NKJSON? {
-        if let data = JSONData as? Data {
+    public class func parse(_ JSONData: Data?) -> NKJSON? {
+        if let data = JSONData {
             do {
                 if let result: [String: AnyObject] = try JSONSerialization.jsonObject(with: data, options: []) as? [String: AnyObject] {
                     return NKJSON(dictionary: result)
@@ -222,8 +222,8 @@ public class NKJSON {
         return nil
     }
     
-    public class func parse<T:NKJSONParsable>(_ JSONData: NSData?, key: String? = nil) -> T? {
-        if let data = JSONData as? Data {
+    public class func parse<T:NKJSONParsable>(_ JSONData: Data?, key: String? = nil) -> T? {
+        if let data = JSONData {
             do {
                 if let result: [String: AnyObject] = try JSONSerialization.jsonObject(with: data, options: []) as? [String: AnyObject] {
                     guard let key = key else {
@@ -247,8 +247,8 @@ public class NKJSON {
         return nil
     }
     
-    public class func parse<T:NKJSONParsable>(_ JSONData: NSData?, key: String? = nil) -> [T]? {
-        if let data = JSONData as? Data {
+    public class func parse<T:NKJSONParsable>(_ JSONData: Data?, key: String? = nil) -> [T]? {
+        if let data = JSONData {
             do {
                 guard let key = key else {
                     if let result: [[String: AnyObject]] = try JSONSerialization.jsonObject(with: data, options: []) as? [[String: AnyObject]] {
