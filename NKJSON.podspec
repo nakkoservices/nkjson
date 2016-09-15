@@ -4,7 +4,7 @@ Pod::Spec.new do |s|
     s.license = 'MIT'
     s.summary = 'The Swift class you were missing for those pesky JSON chunks of data'
     s.homepage = 'https://github.com/nakkoservices/nkjson'
-    s.social_media_url = 'https://twitter.com/PyBaig'
+    s.social_media_url = 'https://twitter.com/nakko'
     s.authors = { 'Mihai Fratu' => 'zeusent@msn.com' }
     s.source = { :git => 'https://github.com/nakkoservices/nkjson.git', :tag => s.version }
 
@@ -15,6 +15,5 @@ Pod::Spec.new do |s|
     s.source_files = 'NKJSON/NKJSON.swift'
 
     s.requires_arc = true
-    s.pod_target_xcconfig = { 'SWIFT_VERSION' => '3.0' }
 
 end
