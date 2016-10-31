@@ -14,15 +14,6 @@ private let dotReplacement = "_|_DOT_|_"
 // Extract a Foundation object
 infix operator <> : NKJSONDefaultPrecedence
 
-// Parse a NKJSONParsable object
-infix operator <*> : NKJSONDefaultPrecedence
-
-// Extract an Array of NKJSONParsable objects
-infix operator <|*|> : NKJSONDefaultPrecedence
-
-// Extract a Dictionary of NKJSONParsable objects
-infix operator <|*|*|> : NKJSONDefaultPrecedence
-
 // Transform a type to another type using a callback
 infix operator <<>> : NKJSONTransformPrecedence
 
@@ -75,7 +66,7 @@ public func <><T> (left: inout T!, right: AnyObject?) {
     }
 }
 
-public func <*><T:NKJSONParsable> (left: inout T, right: AnyObject?) {
+public func <><T:NKJSONParsable> (left: inout T, right: AnyObject?) {
     if let dictionary = right as? [String: AnyObject] {
         if let object = (T.self as T.Type).init(JSON: NKJSON(dictionary: dictionary)) {
             left = object
@@ -83,24 +74,24 @@ public func <*><T:NKJSONParsable> (left: inout T, right: AnyObject?) {
     }
 }
 
-public func <*><T:NKJSONParsable> (left: inout T?, right: AnyObject?) {
+public func <><T:NKJSONParsable> (left: inout T?, right: AnyObject?) {
     if let dictionary = right as? [String: AnyObject] {
         left = (T.self as T.Type).init(JSON: NKJSON(dictionary: dictionary))
     }
 }
 
-public func <*><T:NKJSONParsable> (left: inout T!, right: AnyObject?) {
+public func <><T:NKJSONParsable> (left: inout T!, right: AnyObject?) {
     if let dictionary = right as? [String: AnyObject] {
         left = (T.self as T.Type).init(JSON: NKJSON(dictionary: dictionary))
     }
 }
 
-public func <|*|><T:NKJSONParsable>(left: inout [T], right: AnyObject?) {
+public func <><T:NKJSONParsable>(left: inout [T], right: AnyObject?) {
     if let array = right as? [AnyObject] {
         var allObjects = Array<T>()
         for dictionary in array {
             var object: T!
-            object <*> dictionary
+            object <> dictionary
             if object != nil {
                 allObjects.append(object)
             }
@@ -110,12 +101,12 @@ public func <|*|><T:NKJSONParsable>(left: inout [T], right: AnyObject?) {
     
 }
 
-public func <|*|><T:NKJSONParsable>(left: inout [T]?, right: AnyObject?) {
+public func <><T:NKJSONParsable>(left: inout [T]?, right: AnyObject?) {
     if let array = right as? [AnyObject] {
         var allObjects = Array<T>()
         for dictionary in array {
             var object: T!
-            object <*> dictionary
+            object <> dictionary
             if object != nil {
                 allObjects.append(object)
             }
@@ -124,12 +115,12 @@ public func <|*|><T:NKJSONParsable>(left: inout [T]?, right: AnyObject?) {
     }
 }
 
-public func <|*|><T:NKJSONParsable>(left: inout[T]!, right: AnyObject?) {
+public func <><T:NKJSONParsable>(left: inout[T]!, right: AnyObject?) {
     if let array = right as? [AnyObject] {
         var allObjects = Array<T>()
         for dictionary in array {
             var object: T!
-            object <*> dictionary
+            object <> dictionary
             if object != nil {
                 allObjects.append(object)
             }
@@ -138,12 +129,12 @@ public func <|*|><T:NKJSONParsable>(left: inout[T]!, right: AnyObject?) {
     }
 }
 
-public func <|*|*|><T:NKJSONParsable>(left: inout [String: T], right: AnyObject?) {
+public func <><T:NKJSONParsable>(left: inout [String: T], right: AnyObject?) {
     if let mainDictionary = right as? [String: AnyObject] {
         var allObjects: [String: T] = [:]
         for (key, dictionary): (String, AnyObject) in mainDictionary {
             var object: T!
-            object <*> dictionary
+            object <> dictionary
             if object != nil {
                 allObjects[key] = object
             }
@@ -152,12 +143,12 @@ public func <|*|*|><T:NKJSONParsable>(left: inout [String: T], right: AnyObject?
     }
 }
 
-public func <|*|*|><T:NKJSONParsable>(left: inout [String: T]?, right: AnyObject?) {
+public func <><T:NKJSONParsable>(left: inout [String: T]?, right: AnyObject?) {
     if let mainDictionary = right as? [String: AnyObject] {
         var allObjects: [String: T] = [:]
         for (key, dictionary): (String, AnyObject) in mainDictionary {
             var object: T!
-            object <*> dictionary
+            object <> dictionary
             if object != nil {
                 allObjects[key] = object
             }
@@ -166,12 +157,12 @@ public func <|*|*|><T:NKJSONParsable>(left: inout [String: T]?, right: AnyObject
     }
 }
 
-public func <|*|*|><T:NKJSONParsable>(left: inout [String: T]!, right: AnyObject?) {
+public func <><T:NKJSONParsable>(left: inout [String: T]!, right: AnyObject?) {
     if let mainDictionary = right as? [String: AnyObject] {
         var allObjects: [String: T] = [:]
         for (key, dictionary): (String, AnyObject) in mainDictionary {
             var object: T!
-            object <*> dictionary
+            object <> dictionary
             if object != nil {
                 allObjects[key] = object
             }

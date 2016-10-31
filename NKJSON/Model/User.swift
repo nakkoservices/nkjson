@@ -20,10 +20,10 @@ class User: NKJSONParsable {
     
     required init(JSON: NKJSON) {
         name <> JSON["name"]
-        id <*> JSON["id"]
-        siblings <|*|> JSON["siblings"]
+        id <> JSON["id"]
+        siblings <> JSON["siblings"]
         languages <> JSON["languages"]
-        parents <|*|*|> JSON["parents"]
+        parents <> JSON["parents"]
         birthDate <> JSON["birthDate"] <<>> NKJSON.toDate
         
         size <> JSON["size"] <<>> NKJSON.toCGSize
