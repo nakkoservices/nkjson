@@ -7,7 +7,11 @@
 //
 
 import Foundation
-import UIKit
+#if os(OSX)
+    import AppKit
+#else
+    import UIKit
+#endif
 
 private let dotReplacement = "_|_DOT_|_"
 
