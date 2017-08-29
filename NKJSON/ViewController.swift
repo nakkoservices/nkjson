@@ -18,7 +18,8 @@ class ViewController: UIViewController {
         
         if let user: User = NKJSON.parse(JSONString, key: "data") {
             print("Hey \(user.name)! I see you have your ID with you. Series is \(user.id.series) and the number is \(user.id.number)")
-            print("Is your birthday today? Oh no! I see you were born on \(user.birthDate)")
+            let birthDayString = user.birthDate ?? Date()
+            print("Is your birthday today? Oh no! I see you were born on \(birthDayString)")
             print("It seems like you have \(user.siblings.count) siblings. One is \(user.siblings[0].name) and the other one is \(user.siblings[1].name)")
             print("You can speak \(user.languages.count) languages and by that I mean \(user.languages[0]) and \(user.languages[1]), whatever that is...")
             print("Oh yeah! And your parents are as follows:")

@@ -351,7 +351,7 @@ public class NKJSON {
         do {
             let regEx = try NSRegularExpression(pattern: "(.*?)(?:\\[(.*?)\\=(.*?)\\|(.*?)\\]|$)")
             let result = regEx.firstMatch(in: currentKey, options: [], range: NSMakeRange(0, currentKey.characters.count))!
-            if result.rangeAt(2).location == NSNotFound  {
+            if result.range(at: 2).location == NSNotFound  {
                 if keys.count > 1 {
                     if let newDictionary = dictionary[currentKey] as? [String: AnyObject] {
                         return getValue(keys: Array(keys[1..<keys.count]), dictionary: newDictionary)
@@ -377,10 +377,10 @@ public class NKJSON {
                 }
             }
             else {
-                let keyName = (currentKey as NSString).substring(with: result.rangeAt(2))
-                let keyValue = (currentKey as NSString).substring(with: result.rangeAt(3))
-                let valueKey = (currentKey as NSString).substring(with: result.rangeAt(4))
-                currentKey = (currentKey as NSString).substring(with: result.rangeAt(1))
+                let keyName = (currentKey as NSString).substring(with: result.range(at: 2))
+                let keyValue = (currentKey as NSString).substring(with: result.range(at: 3))
+                let valueKey = (currentKey as NSString).substring(with: result.range(at: 4))
+                currentKey = (currentKey as NSString).substring(with: result.range(at: 1))
                 
                 guard let arrayOfPairs = dictionary[currentKey] as? [[String: AnyObject]] else {
                     return nil
