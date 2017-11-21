@@ -350,7 +350,7 @@ public class NKJSON {
         
         do {
             let regEx = try NSRegularExpression(pattern: "(.*?)(?:\\[(.*?)\\=(.*?)\\|(.*?)\\]|$)")
-            let result = regEx.firstMatch(in: currentKey, options: [], range: NSMakeRange(0, currentKey.characters.count))!
+            let result = regEx.firstMatch(in: currentKey, options: [], range: NSMakeRange(0, currentKey.count))!
             if result.range(at: 2).location == NSNotFound  {
                 if keys.count > 1 {
                     if let newDictionary = dictionary[currentKey] as? [String: AnyObject] {
@@ -558,7 +558,7 @@ public class NKJSON {
         guard let string = (object as? String)?.trimmingCharacters(in: NSCharacterSet.whitespacesAndNewlines) else {
             return nil
         }
-        return string.characters.count > 0 ? string : nil
+        return string.isEmpty ? nil : string
     }
     
 }
@@ -574,7 +574,7 @@ extension String {
     func detectDates() -> [Date]? {
         do {
             return try NSDataDetector(types: NSTextCheckingResult.CheckingType.date.rawValue)
-                .matches(in: self, options: [], range: NSRange(0..<characters.count))
+                .matches(in: self, options: [], range: NSRange(0..<count))
                 .filter{$0.resultType == .date}
                 .flatMap{$0.date}
         } catch let error as NSError {
