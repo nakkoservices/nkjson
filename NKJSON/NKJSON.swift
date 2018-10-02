@@ -529,8 +529,8 @@ extension String {
         do {
             return try NSDataDetector(types: NSTextCheckingResult.CheckingType.date.rawValue)
                 .matches(in: self, options: [], range: NSRange(0..<count))
-                .filter{$0.resultType == .date}
-                .flatMap{$0.date}
+                .filter {$0.resultType == .date}
+                .compactMap {$0.date}
         } catch let error as NSError {
             print(error.localizedDescription)
             return nil
