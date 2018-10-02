@@ -46,12 +46,6 @@ public func <><T> (left: inout T?, right: Any?) {
     }
 }
 
-public func <><T> (left: inout T!, right: Any?) {
-    if let value = right as? T {
-        left = value
-    }
-}
-
 public func <><T> (left: inout T, right: AnyObject?) {
     if let value = right as? T {
         left = value
@@ -60,12 +54,6 @@ public func <><T> (left: inout T, right: AnyObject?) {
 
 public func <><T> (left: inout T?, right: AnyObject?) {
     if let value = right as? T? {
-        left = value
-    }
-}
-
-public func <><T> (left: inout T!, right: AnyObject?) {
-    if let value = right as? T! {
         left = value
     }
 }
@@ -79,12 +67,6 @@ public func <><T:NKJSONParsable> (left: inout T, right: AnyObject?) {
 }
 
 public func <><T:NKJSONParsable> (left: inout T?, right: AnyObject?) {
-    if let dictionary = right as? [String: AnyObject] {
-        left = (T.self as T.Type).init(JSON: NKJSON(dictionary: dictionary))
-    }
-}
-
-public func <><T:NKJSONParsable> (left: inout T!, right: AnyObject?) {
     if let dictionary = right as? [String: AnyObject] {
         left = (T.self as T.Type).init(JSON: NKJSON(dictionary: dictionary))
     }
@@ -119,20 +101,6 @@ public func <><T:NKJSONParsable>(left: inout [T]?, right: AnyObject?) {
     }
 }
 
-public func <><T:NKJSONParsable>(left: inout[T]!, right: AnyObject?) {
-    if let array = right as? [AnyObject] {
-        var allObjects = Array<T>()
-        for dictionary in array {
-            var object: T!
-            object <> dictionary
-            if object != nil {
-                allObjects.append(object)
-            }
-        }
-        left = allObjects
-    }
-}
-
 public func <><T:NKJSONParsable>(left: inout [String: T], right: AnyObject?) {
     if let mainDictionary = right as? [String: AnyObject] {
         var allObjects: [String: T] = [:]
@@ -148,20 +116,6 @@ public func <><T:NKJSONParsable>(left: inout [String: T], right: AnyObject?) {
 }
 
 public func <><T:NKJSONParsable>(left: inout [String: T]?, right: AnyObject?) {
-    if let mainDictionary = right as? [String: AnyObject] {
-        var allObjects: [String: T] = [:]
-        for (key, dictionary): (String, AnyObject) in mainDictionary {
-            var object: T!
-            object <> dictionary
-            if object != nil {
-                allObjects[key] = object
-            }
-        }
-        left = allObjects
-    }
-}
-
-public func <><T:NKJSONParsable>(left: inout [String: T]!, right: AnyObject?) {
     if let mainDictionary = right as? [String: AnyObject] {
         var allObjects: [String: T] = [:]
         for (key, dictionary): (String, AnyObject) in mainDictionary {
